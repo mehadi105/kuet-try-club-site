@@ -31,11 +31,23 @@
           <a class="toplink" href="#work">Work</a>
           <a class="toplink" href="#spotlight">Spotlight</a>
           <a class="btn small" href="#contact">Contact</a>
+          <button
+            id="navToggle"
+            class="btn small nav-toggle"
+            type="button"
+            aria-controls="primaryNav"
+            aria-expanded="false"
+            aria-label="Open menu"
+          >
+            <span aria-hidden="true">☰</span>
+          </button>
         </div>
       </div>
     </header>
 
-    <nav class="primary-nav" aria-label="Primary navigation">
+    <div id="navBackdrop" class="nav-backdrop" hidden></div>
+
+    <nav id="primaryNav" class="primary-nav" aria-label="Primary navigation">
       <div class="container nav-inner">
         <a href="#main">Home</a>
         <a href="#updates">News & stories</a>
@@ -320,6 +332,36 @@
         );
 
         els.forEach((el) => io.observe(el));
+      })();
+    </script>
+    <script>
+      (function () {
+        const nav = document.getElementById("primaryNav");
+        const btn = document.getElementById("navToggle");
+        const backdrop = document.getElementById("navBackdrop");
+        if (!nav || !btn || !backdrop) return;
+
+        const setOpen = (open) => {
+          nav.classList.toggle("is-open", open);
+          btn.setAttribute("aria-expanded", String(open));
+          backdrop.hidden = !open;
+          document.documentElement.classList.toggle("nav-open", open);
+        };
+
+        btn.addEventListener("click", () => {
+          setOpen(!nav.classList.contains("is-open"));
+        });
+
+        backdrop.addEventListener("click", () => setOpen(false));
+
+        nav.addEventListener("click", (e) => {
+          const target = e.target;
+          if (target && target.tagName === "A") setOpen(false);
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") setOpen(false);
+        });
       })();
     </script>
   </body>
