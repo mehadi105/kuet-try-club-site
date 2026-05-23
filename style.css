@@ -243,23 +243,17 @@ h3 {
 
 .hero-media {
   width: 100%;
-  height: clamp(240px, 42vh, 420px);
-  background:
-    linear-gradient(0deg, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.14)),
-    linear-gradient(135deg, rgba(0, 166, 235, 0.35), rgba(0, 118, 168, 0.25)),
-    var(--subtle);
+  background: var(--subtle);
   border-bottom: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
+  line-height: 0;
 }
 
-.hero-media::after {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.10), transparent);
-  transform: rotate(8deg) translateX(-40%);
-  animation: sheen 8s var(--ease-out) infinite;
+.hero-media img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  vertical-align: middle;
 }
 
 .hero-content {
@@ -526,6 +520,202 @@ textarea:focus {
   box-shadow: 0 0 0 4px rgba(0, 166, 235, 0.18);
 }
 
+select {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text);
+  outline: none;
+  font: inherit;
+}
+
+select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(0, 166, 235, 0.18);
+}
+
+.join-form-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  padding: 22px 22px 18px;
+  box-shadow: var(--shadow);
+}
+
+.join-form {
+  display: grid;
+  gap: 0;
+}
+
+.form-section {
+  border: none;
+  margin: 0 0 22px;
+  padding: 0 0 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-section--last {
+  border-bottom: none;
+  margin-bottom: 16px;
+  padding-bottom: 0;
+}
+
+.form-section legend {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--text);
+  padding: 0;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.field--spaced {
+  margin-top: 12px;
+}
+
+.req {
+  color: var(--brand-deep);
+  font-weight: 800;
+}
+
+.field-hint {
+  margin: -6px 0 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.label-block {
+  display: block;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+}
+
+.check,
+.radio {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.check-block {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.check input,
+.radio input {
+  width: auto;
+  margin-top: 3px;
+  accent-color: var(--brand);
+  flex-shrink: 0;
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-success {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 166, 235, 0.35);
+  background: rgba(0, 166, 235, 0.08);
+  color: var(--brand-deep);
+  font-weight: 600;
+}
+
+.form-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
+.page-header {
+  padding: 28px 0 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--subtle);
+}
+
+.page-header h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+.page-header-lede {
+  max-width: 65ch;
+  margin: 0 0 12px;
+}
+
+.video-grid {
+  display: grid;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.video-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  background: #0f172a;
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-caption {
+  padding: 16px 18px 18px;
+}
+
+.video-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
 .footer {
   padding: 46px 0 18px;
   background: linear-gradient(180deg, var(--brand), var(--brand-deep));
@@ -717,6 +907,15 @@ textarea:focus {
   .contact-grid {
     grid-template-columns: 1fr;
   }
+
+  .form-row,
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .join-form-card {
+    padding: 16px 14px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -752,10 +951,6 @@ textarea:focus {
     width: auto;
     justify-content: center;
     white-space: nowrap;
-  }
-
-  .hero-media {
-    height: 240px;
   }
 
   .hero-content {
@@ -847,7 +1042,4 @@ textarea:focus {
     transition: none !important;
   }
 
-  .hero-media::after {
-    animation: none !important;
-  }
 }

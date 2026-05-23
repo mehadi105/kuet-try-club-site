@@ -21,7 +21,7 @@
 
     <header class="topbar" aria-label="Site header">
       <div class="container topbar-inner">
-        <a class="logo" href="#main" aria-label="TRY KUET home">
+        <a class="logo" href="./index.html" aria-label="TRY KUET home">
           <span class="logo-mark" aria-hidden="true">TRY</span>
           <span class="logo-text">Social Service Club</span>
         </a>
@@ -30,6 +30,7 @@
           <a class="toplink" href="#updates">Updates</a>
           <a class="toplink" href="#work">Work</a>
           <a class="toplink" href="#spotlight">Spotlight</a>
+          <a class="btn small primary" href="./join.html">Join</a>
           <a class="btn small" href="#contact">Contact</a>
           <button
             id="navToggle"
@@ -53,13 +54,22 @@
         <a href="#updates">News & stories</a>
         <a href="#work">What we do</a>
         <a href="#spotlight">Spotlight</a>
-        <a href="#contact">Get involved</a>
+        <a href="#inspiration">Inspirational stories</a>
+        <a href="./join.html">Join TRY</a>
+        <a href="#contact">Contact</a>
       </div>
     </nav>
 
     <main id="main">
       <section class="hero-unicef reveal" aria-label="Featured story">
-        <div class="hero-media" role="img" aria-label="Featured image placeholder"></div>
+        <div class="hero-media">
+          <img
+            src="./public/639984083_1360235046146231_4377309201098488597_n.jpg"
+            alt="TRY KUET — মানবতার এক যুগে, social service and community work"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
         <div class="container hero-content">
           <p class="eyebrow">Featured</p>
           <h1 class="hero-title">Emergency response & community support</h1>
@@ -68,8 +78,8 @@
             with a verified TRY update headline and short summary.
           </p>
           <div class="hero-cta">
-            <a class="btn primary" href="#updates">Read more</a>
-            <a class="btn" href="#contact">Support / Volunteer</a>
+            <a class="btn primary" href="./join.html">Join TRY</a>
+            <a class="btn" href="#updates">Read more</a>
           </div>
         </div>
       </section>
@@ -145,7 +155,7 @@
                   A simple path for students to contribute time, skills, and energy
                   to social welfare work.
                 </p>
-                <a class="textlink" href="#contact">Get involved →</a>
+                <a class="textlink" href="./join.html">Get involved →</a>
               </div>
             </article>
 
@@ -207,6 +217,39 @@
         </div>
       </section>
 
+      <section id="inspiration" class="section subtle reveal" aria-label="Inspirational stories">
+        <div class="container">
+          <div class="section-title">
+            <h2>Inspirational stories</h2>
+            <p class="muted">
+              Watch stories of service, compassion, and community impact from TRY and related work.
+            </p>
+          </div>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <div class="video-embed">
+                <iframe
+                  src="https://www.youtube.com/embed/videoseries?list=PLMV2DVHuQ9Ii1-yeok6bpsto4gOh3k7c_"
+                  title="TRY inspirational stories — YouTube playlist"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <div class="video-caption">
+                <h3 class="video-title">TRY story playlist</h3>
+                <p class="muted">
+                  A curated playlist of inspirational moments and humanitarian work. Use the
+                  player controls to browse videos in the series.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="subscribe reveal" aria-label="Subscribe section">
         <div class="container subscribe-grid">
           <div class="subscribe-media" role="img" aria-label="Large image placeholder"></div>
@@ -224,6 +267,14 @@
               Note: Donation/payment details should be shared only via verified official posts.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section class="section subtle reveal" aria-label="Join call to action">
+        <div class="container center-block">
+          <h2>Want to volunteer with TRY?</h2>
+          <p class="muted">KUET students can apply through our membership form.</p>
+          <a class="btn primary" href="./join.html">Join TRY</a>
         </div>
       </section>
 
@@ -284,12 +335,14 @@
             <li><a href="#updates" class="textlink">News & stories</a></li>
             <li><a href="#work" class="textlink">What we do</a></li>
             <li><a href="#spotlight" class="textlink">Spotlight</a></li>
+            <li><a href="#inspiration" class="textlink">Inspirational stories</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h3 class="footer-title">Get involved</h3>
           <ul class="list">
+            <li><a href="./join.html" class="textlink">Join TRY</a></li>
             <li><a href="#contact" class="textlink">Volunteer</a></li>
             <li><a href="#contact" class="textlink">Donate (official links)</a></li>
             <li><a href="#contact" class="textlink">Contact</a></li>
