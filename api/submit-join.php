@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 require_once __DIR__ . '/database.php';
+require_once __DIR__ . '/uploads.php';
 
 function jsonResponse(bool $success, string $message, int $code = 200): void
 {
@@ -70,16 +71,34 @@ if (isset($_POST['skills']) && is_array($_POST['skills'])) {
     $skills = array_values(array_filter(array_map('trim', $_POST['skills'])));
 }
 
+$photoPath = null;
+
+try {
+    $photoPath = saveApplicationPhoto($_FILES['photo'] ?? [], $roll);
+} catch (InvalidArgumentException $e) {
+    jsonResponse(false, $e->getMessage(), 422);
+} catch (RuntimeException $e) {
+    jsonResponse(false, 'Could not save photo. Please try again.', 500);
+}
+
 try {
     $pdo = getDb();
+
+    $duplicate = $pdo->prepare('SELECT 1 FROM join_applications WHERE roll = :roll');
+    $duplicate->execute([':roll' => $roll]);
+    if ($duplicate->fetchColumn()) {
+        deleteApplicationPhoto($photoPath);
+        jsonResponse(false, 'An application with this roll number already exists.', 409);
+    }
+
     $stmt = $pdo->prepare(
         'INSERT INTO join_applications (
-            fullname, roll, department, batch, semester, blood_group,
+            fullname, roll, department, batch, semester, blood_group, photo_path,
             email, phone, facebook, hall, why_join, experience,
             skills, other_skills, weekly_hours, meetings,
             emergency_name, emergency_phone
         ) VALUES (
-            :fullname, :roll, :department, :batch, :semester, :blood_group,
+            :fullname, :roll, :department, :batch, :semester, :blood_group, :photo_path,
             :email, :phone, :facebook, :hall, :why_join, :experience,
             :skills, :other_skills, :weekly_hours, :meetings,
             :emergency_name, :emergency_phone
@@ -93,6 +112,7 @@ try {
         ':batch' => postString('batch', 20),
         ':semester' => postString('semester', 10),
         ':blood_group' => postString('blood_group', 10),
+        ':photo_path' => $photoPath,
         ':email' => $email,
         ':phone' => $phone,
         ':facebook' => postString('facebook', 300),
@@ -109,6 +129,8 @@ try {
 
     jsonResponse(true, 'Application submitted successfully.');
 } catch (PDOException $e) {
+    deleteApplicationPhoto($photoPath);
+
     if ($e->getCode() === '23505' || str_contains($e->getMessage(), 'duplicate key')) {
         jsonResponse(false, 'An application with this roll number already exists.', 409);
     }

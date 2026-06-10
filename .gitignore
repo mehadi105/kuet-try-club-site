@@ -1,4 +1,8 @@
 .env
+uploads/applications/*
+!uploads/applications/.gitkeep
+uploads/appeals/*
+!uploads/appeals/.gitkeep
 data/*.sqlite
 data/*.sqlite-journal
 data/*.sqlite-wal

@@ -28,7 +28,7 @@
 
         <div class="topbar-actions">
           <a class="btn small primary" href="./join.html" aria-current="page">Join</a>
-          <a class="btn small" href="./index.html#contact">Contact</a>
+          <a class="btn small btn-contact" href="./index.html#contact">Contact</a>
           <button
             id="navToggle"
             class="btn small nav-toggle"
@@ -50,7 +50,10 @@
         <a href="./index.html">Home</a>
         <a href="./index.html#updates">News & stories</a>
         <a href="./index.html#work">What we do</a>
+        <a href="./index.html#spotlight">Spotlight</a>
+        <a href="./index.html#inspiration">Inspirational stories</a>
         <a href="./join.html" aria-current="page">Join TRY</a>
+        <a href="./application-status.html">Check status</a>
         <a href="./index.html#contact">Contact</a>
       </div>
     </nav>
@@ -71,7 +74,7 @@
       <section class="section" aria-label="Join TRY membership application">
         <div class="container">
           <div class="join-form-card">
-            <form id="joinForm" class="join-form" novalidate>
+            <form id="joinForm" class="join-form" novalidate enctype="multipart/form-data">
               <fieldset class="form-section">
                 <legend>Personal information</legend>
                 <div class="form-row">
@@ -156,6 +159,20 @@
                       <option value="O+">O+</option>
                       <option value="O-">O-</option>
                     </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="join-photo">Profile photo <span class="req">*</span></label>
+                  <input
+                    id="join-photo"
+                    name="photo"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    required
+                  />
+                  <p class="field-hint muted">Recent passport-style photo. JPG, PNG, or WEBP. Max 2 MB.</p>
+                  <div id="joinPhotoPreview" class="photo-preview" hidden>
+                    <img id="joinPhotoPreviewImg" src="" alt="Selected profile photo preview" />
                   </div>
                 </div>
               </fieldset>
@@ -311,9 +328,11 @@
               <p id="joinFormError" class="form-error" hidden role="alert"></p>
               <p id="joinFormSuccess" class="form-success" hidden role="status">
                 Thank you! Your application has been submitted successfully.
+                <a class="textlink" href="./application-status.html">Check your application status →</a>
               </p>
               <p class="form-note muted">
-                <span class="req">*</span> Required fields. Submissions are saved via the PHP backend (PostgreSQL).
+                <span class="req">*</span> Required fields. After submitting, you can check status anytime with your roll and phone on the
+                <a class="textlink" href="./application-status.html">status page</a>.
               </p>
             </form>
           </div>
@@ -334,6 +353,7 @@
             <li><a href="./index.html#updates" class="textlink">News & stories</a></li>
             <li><a href="./index.html#work" class="textlink">What we do</a></li>
             <li><a href="./index.html#spotlight" class="textlink">Spotlight</a></li>
+            <li><a href="./index.html#inspiration" class="textlink">Inspirational stories</a></li>
           </ul>
         </div>
 
@@ -354,36 +374,7 @@
     <script>
       document.getElementById("year").textContent = String(new Date().getFullYear());
     </script>
-    <script>
-      (function () {
-        const nav = document.getElementById("primaryNav");
-        const btn = document.getElementById("navToggle");
-        const backdrop = document.getElementById("navBackdrop");
-        if (!nav || !btn || !backdrop) return;
-
-        const setOpen = (open) => {
-          nav.classList.toggle("is-open", open);
-          btn.setAttribute("aria-expanded", String(open));
-          backdrop.hidden = !open;
-          document.documentElement.classList.toggle("nav-open", open);
-        };
-
-        btn.addEventListener("click", () => {
-          setOpen(!nav.classList.contains("is-open"));
-        });
-
-        backdrop.addEventListener("click", () => setOpen(false));
-
-        nav.addEventListener("click", (e) => {
-          const target = e.target;
-          if (target && target.tagName === "A") setOpen(false);
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") setOpen(false);
-        });
-      })();
-    </script>
+    <script src="./scripts/site.js" defer></script>
     <script>
       (function () {
         const form = document.getElementById("joinForm");
@@ -415,6 +406,8 @@
               success.hidden = false;
               success.scrollIntoView({ behavior: "smooth", block: "nearest" });
               form.reset();
+              const preview = document.getElementById("joinPhotoPreview");
+              if (preview) preview.hidden = true;
             } else {
               error.textContent = data.message || "Submission failed.";
               error.hidden = false;
@@ -427,6 +420,24 @@
           } finally {
             if (submitBtn) submitBtn.disabled = false;
           }
+        });
+      })();
+
+      (function () {
+        const input = document.getElementById("join-photo");
+        const preview = document.getElementById("joinPhotoPreview");
+        const img = document.getElementById("joinPhotoPreviewImg");
+        if (!input || !preview || !img) return;
+
+        input.addEventListener("change", () => {
+          const file = input.files && input.files[0];
+          if (!file) {
+            preview.hidden = true;
+            img.removeAttribute("src");
+            return;
+          }
+          img.src = URL.createObjectURL(file);
+          preview.hidden = false;
         });
       })();
     </script>

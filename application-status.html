@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check application status — TRY KUET</title>
+    <meta name="description" content="Check your TRY KUET volunteer application status using roll number and phone." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="topbar" aria-label="Site header">
+      <div class="container topbar-inner">
+        <a class="logo" href="./index.html" aria-label="TRY KUET home">
+          <span class="logo-mark" aria-hidden="true">TRY</span>
+          <span class="logo-text">Social Service Club</span>
+        </a>
+        <div class="topbar-actions">
+          <a class="btn small" href="./join.html">Apply</a>
+          <a class="btn small primary" href="./application-status.html" aria-current="page">Check status</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="page-header">
+        <div class="container">
+          <p class="eyebrow">Volunteer application</p>
+          <h1>Check application status</h1>
+          <p class="muted page-header-lede">
+            Enter the same roll number and phone number you used on the join form.
+          </p>
+          <a class="textlink" href="./join.html">← Apply to join TRY</a>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container">
+          <div class="join-form-card status-check-card">
+            <form id="statusForm" class="join-form" novalidate>
+              <div class="form-row">
+                <div class="field">
+                  <label for="status-roll">Roll number <span class="req">*</span></label>
+                  <input
+                    id="status-roll"
+                    name="roll"
+                    type="text"
+                    required
+                    placeholder="e.g. 2207105"
+                    pattern="[0-9]{7}"
+                    title="7-digit KUET roll number"
+                  />
+                </div>
+                <div class="field">
+                  <label for="status-phone">Phone number <span class="req">*</span></label>
+                  <input
+                    id="status-phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    placeholder="01XXXXXXXXX"
+                    pattern="01[0-9]{9}"
+                    title="11-digit Bangladesh mobile number"
+                  />
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn primary" type="submit">Check status</button>
+              </div>
+              <p id="statusError" class="form-error" hidden role="alert"></p>
+            </form>
+
+            <div id="statusResult" class="status-result" hidden>
+              <p class="status-result-label">Application found</p>
+              <h2 id="statusName" class="status-result-name"></h2>
+              <dl class="status-result-meta">
+                <div><dt>Roll</dt><dd id="statusRoll"></dd></div>
+                <div><dt>Department</dt><dd id="statusDept"></dd></div>
+                <div><dt>Batch</dt><dd id="statusBatch"></dd></div>
+                <div><dt>Submitted</dt><dd id="statusSubmitted"></dd></div>
+              </dl>
+              <p id="statusBadge" class="status-badge"></p>
+              <p id="statusMessage" class="status-message muted"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" aria-label="Footer">
+      <div class="container footer-bottom">
+        <p class="muted">© <span id="year">2026</span> TRY KUET</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = String(new Date().getFullYear());
+
+      (function () {
+        const form = document.getElementById("statusForm");
+        const error = document.getElementById("statusError");
+        const result = document.getElementById("statusResult");
+        if (!form || !error || !result) return;
+
+        const statusClass = {
+          pending: "status-pending",
+          approved: "status-approved",
+          rejected: "status-rejected",
+          waitlisted: "status-waitlisted",
+          interview_scheduled: "status-interview",
+        };
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          error.hidden = true;
+          result.hidden = true;
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const btn = form.querySelector('button[type="submit"]');
+          if (btn) btn.disabled = true;
+
+          try {
+            const res = await fetch("./api/check-application-status.php", {
+              method: "POST",
+              body: new FormData(form),
+            });
+            const data = await res.json();
+
+            if (!data.success || !data.application) {
+              error.textContent = data.message || "Could not find application.";
+              error.hidden = false;
+              return;
+            }
+
+            const app = data.application;
+            document.getElementById("statusName").textContent = app.fullname;
+            document.getElementById("statusRoll").textContent = app.roll;
+            document.getElementById("statusDept").textContent = app.department;
+            document.getElementById("statusBatch").textContent = app.batch;
+            document.getElementById("statusSubmitted").textContent = app.submitted_at;
+
+            const badge = document.getElementById("statusBadge");
+            badge.textContent = app.status_label;
+            badge.className = "status-badge " + (statusClass[app.status] || "status-pending");
+
+            document.getElementById("statusMessage").textContent = data.message;
+            result.hidden = false;
+          } catch {
+            error.textContent = "Could not reach the server. Start PHP with: php -S localhost:8000";
+            error.hidden = false;
+          } finally {
+            if (btn) btn.disabled = false;
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
