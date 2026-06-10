@@ -656,6 +656,16 @@ select:focus {
   font-weight: 600;
 }
 
+.form-error {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  background: rgba(220, 38, 38, 0.06);
+  color: #b91c1c;
+  font-weight: 600;
+}
+
 .form-note {
   margin: 12px 0 0;
   font-size: 13px;

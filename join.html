@@ -308,11 +308,12 @@
                 <button class="btn" type="reset">Clear form</button>
               </div>
 
+              <p id="joinFormError" class="form-error" hidden role="alert"></p>
               <p id="joinFormSuccess" class="form-success" hidden role="status">
-                Thank you! Your application has been recorded (demo). In production, this will be sent to the club committee.
+                Thank you! Your application has been submitted successfully.
               </p>
               <p class="form-note muted">
-                <span class="req">*</span> Required fields. This form is a prototype; connect to Google Forms or a backend to store submissions.
+                <span class="req">*</span> Required fields. Submissions are saved via the PHP backend (PostgreSQL).
               </p>
             </form>
           </div>
@@ -387,17 +388,45 @@
       (function () {
         const form = document.getElementById("joinForm");
         const success = document.getElementById("joinFormSuccess");
-        if (!form || !success) return;
+        const error = document.getElementById("joinFormError");
+        if (!form || !success || !error) return;
 
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
           e.preventDefault();
+          success.hidden = true;
+          error.hidden = true;
+
           if (!form.checkValidity()) {
             form.reportValidity();
             return;
           }
-          success.hidden = false;
-          success.scrollIntoView({ behavior: "smooth", block: "nearest" });
-          form.reset();
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          if (submitBtn) submitBtn.disabled = true;
+
+          try {
+            const res = await fetch("./api/submit-join.php", {
+              method: "POST",
+              body: new FormData(form),
+            });
+            const data = await res.json();
+
+            if (data.success) {
+              success.hidden = false;
+              success.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              form.reset();
+            } else {
+              error.textContent = data.message || "Submission failed.";
+              error.hidden = false;
+              error.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+          } catch {
+            error.textContent =
+              "Could not reach the server. Start PHP with: php -S localhost:8000";
+            error.hidden = false;
+          } finally {
+            if (submitBtn) submitBtn.disabled = false;
+          }
         });
       })();
     </script>
