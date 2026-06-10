@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request donation / appeal — TRY KUET</title>
+    <meta
+      name="description"
+      content="Submit a donation or fundraising appeal request to TRY KUET for verification and publication."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="topbar" aria-label="Site header">
+      <div class="container topbar-inner">
+        <a class="logo" href="./index.html" aria-label="TRY KUET home">
+          <span class="logo-mark" aria-hidden="true">TRY</span>
+          <span class="logo-text">Social Service Club</span>
+        </a>
+        <div class="topbar-actions">
+          <a class="btn small" href="./index.html#updates">Updates</a>
+          <a class="btn small primary" href="./appeal-request.html" aria-current="page">Request appeal</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="page-header">
+        <div class="container">
+          <p class="eyebrow">Fundraising & appeals</p>
+          <h1>Request a donation / appeal post</h1>
+          <p class="muted page-header-lede">
+            If you or someone you know needs help, submit this form for TRY to review. We verify
+            cases before publishing. Payment details are shared only through official TRY posts —
+            not on this form.
+          </p>
+          <a class="textlink" href="./index.html">← Back to home</a>
+        </div>
+      </header>
+
+      <section class="section" aria-label="Appeal request form">
+        <div class="container">
+          <div class="join-form-card">
+            <form id="appealForm" class="join-form" novalidate enctype="multipart/form-data">
+              <fieldset class="form-section">
+                <legend>Your contact details</legend>
+                <div class="form-row">
+                  <div class="field">
+                    <label for="requester-name">Your name <span class="req">*</span></label>
+                    <input id="requester-name" name="requester_name" type="text" required />
+                  </div>
+                  <div class="field">
+                    <label for="requester-phone">Your phone <span class="req">*</span></label>
+                    <input
+                      id="requester-phone"
+                      name="requester_phone"
+                      type="tel"
+                      required
+                      placeholder="01XXXXXXXXX"
+                      pattern="01[0-9]{9}"
+                      title="11-digit Bangladesh mobile number"
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="requester-email">Your email (optional)</label>
+                  <input id="requester-email" name="requester_email" type="email" />
+                </div>
+              </fieldset>
+
+              <fieldset class="form-section">
+                <legend>Case details</legend>
+                <div class="form-row">
+                  <div class="field">
+                    <label for="beneficiary-name">Person who needs help <span class="req">*</span></label>
+                    <input id="beneficiary-name" name="beneficiary_name" type="text" required />
+                  </div>
+                  <div class="field">
+                    <label for="case-type">Type of help <span class="req">*</span></label>
+                    <select id="case-type" name="case_type" required>
+                      <option value="">Select…</option>
+                      <option value="medical">Medical treatment</option>
+                      <option value="education">Education support</option>
+                      <option value="emergency">Emergency relief</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="field">
+                    <label for="target-amount">Estimated amount needed (optional)</label>
+                    <input
+                      id="target-amount"
+                      name="target_amount"
+                      type="text"
+                      placeholder="e.g. 50,000 BDT"
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="location">Hospital / location (optional)</label>
+                    <input id="location" name="location" type="text" placeholder="e.g. Khulna Medical College" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="description">Describe the situation <span class="req">*</span></label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    rows="6"
+                    required
+                    placeholder="What happened, why help is needed, documents available, urgency, etc."
+                  ></textarea>
+                </div>
+                <div class="field">
+                  <label for="appeal-photo">Attach image <span class="muted">(optional)</span></label>
+                  <input
+                    id="appeal-photo"
+                    name="photo"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                  />
+                  <p class="field-hint muted">Not required. JPG, PNG, or WEBP. Max 2 MB. Only upload with permission to share.</p>
+                  <div id="appealPhotoPreview" class="photo-preview" hidden>
+                    <img id="appealPhotoPreviewImg" src="" alt="Selected photo preview" />
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-section">
+                <legend>Declaration</legend>
+                <label class="check">
+                  <input type="checkbox" name="consent_public" required />
+                  I agree that TRY may verify this case and publish an appeal after approval.
+                </label>
+                <label class="check">
+                  <input type="checkbox" name="confirm_accurate" required />
+                  I confirm the information provided is accurate to the best of my knowledge.
+                </label>
+              </fieldset>
+
+              <div class="form-actions">
+                <button class="btn primary" type="submit">Submit appeal request</button>
+              </div>
+              <p id="appealFormSuccess" class="form-success" hidden role="status"></p>
+              <p id="appealFormError" class="form-error" hidden role="alert"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" aria-label="Footer">
+      <div class="container footer-bottom">
+        <p class="muted">© <span id="year">2026</span> TRY KUET</p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = String(new Date().getFullYear());
+
+      (function () {
+        const form = document.getElementById("appealForm");
+        const success = document.getElementById("appealFormSuccess");
+        const error = document.getElementById("appealFormError");
+        if (!form || !success || !error) return;
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          success.hidden = true;
+          error.hidden = true;
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          if (submitBtn) submitBtn.disabled = true;
+
+          try {
+            const res = await fetch("./api/submit-appeal-request.php", {
+              method: "POST",
+              body: new FormData(form),
+            });
+            const data = await res.json();
+
+            if (data.success) {
+              success.textContent = data.message;
+              success.hidden = false;
+              success.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              form.reset();
+              const preview = document.getElementById("appealPhotoPreview");
+              if (preview) preview.hidden = true;
+            } else {
+              error.textContent = data.message || "Submission failed.";
+              error.hidden = false;
+              error.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+          } catch {
+            error.textContent =
+              "Could not reach the server. Start PHP with: php -S localhost:8000";
+            error.hidden = false;
+          } finally {
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        });
+      })();
+
+      (function () {
+        const input = document.getElementById("appeal-photo");
+        const preview = document.getElementById("appealPhotoPreview");
+        const img = document.getElementById("appealPhotoPreviewImg");
+        if (!input || !preview || !img) return;
+
+        input.addEventListener("change", () => {
+          const file = input.files && input.files[0];
+          if (!file) {
+            preview.hidden = true;
+            img.removeAttribute("src");
+            return;
+          }
+          img.src = URL.createObjectURL(file);
+          preview.hidden = false;
+        });
+      })();
+    </script>
+  </body>
+</html>
