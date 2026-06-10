@@ -20,7 +20,11 @@ return [
         'host' => getenv('DB_HOST') ?: '127.0.0.1',
         'port' => getenv('DB_PORT') ?: '5432',
         'name' => getenv('DB_NAME') ?: 'try_kuet',
-        'user' => getenv('DB_USER') ?: getenv('USER') ?: 'postgres',
+        'user' => getenv('DB_USER') ?: getenv('USER') ?: getenv('USERNAME') ?: get_current_user() ?: 'postgres',
         'pass' => getenv('DB_PASS') ?: '',
+    ],
+    'admin' => [
+        'username' => getenv('ADMIN_USERNAME') ?: 'admin',
+        'password' => getenv('ADMIN_PASSWORD') ?: 'trykuet123',
     ],
 ];

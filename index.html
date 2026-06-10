@@ -31,7 +31,7 @@
           <a class="toplink" href="#work">Work</a>
           <a class="toplink" href="#spotlight">Spotlight</a>
           <a class="btn small primary" href="./join.html">Join</a>
-          <a class="btn small" href="#contact">Contact</a>
+          <a class="btn small btn-contact" href="#contact">Contact</a>
           <button
             id="navToggle"
             class="btn small nav-toggle"
@@ -56,6 +56,7 @@
         <a href="#spotlight">Spotlight</a>
         <a href="#inspiration">Inspirational stories</a>
         <a href="./join.html">Join TRY</a>
+        <a href="./appeal-request.html">Request appeal</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -64,6 +65,7 @@
       <section class="hero-unicef reveal" aria-label="Featured story">
         <div class="hero-media">
           <img
+            id="heroImage"
             src="./public/639984083_1360235046146231_4377309201098488597_n.jpg"
             alt="TRY KUET — মানবতার এক যুগে, social service and community work"
             fetchpriority="high"
@@ -71,157 +73,106 @@
           />
         </div>
         <div class="container hero-content">
-          <p class="eyebrow">Featured</p>
-          <h1 class="hero-title">Emergency response & community support</h1>
-          <p class="hero-sub">
+          <p id="heroEyebrow" class="eyebrow">Featured</p>
+          <h1 id="heroTitle" class="hero-title">Emergency response & community support</h1>
+          <p id="heroSubtitle" class="hero-sub">
             A simple structure inspired by the reference layout. Replace this text
             with a verified TRY update headline and short summary.
           </p>
           <div class="hero-cta">
-            <a class="btn primary" href="./join.html">Join TRY</a>
-            <a class="btn" href="#updates">Read more</a>
+            <a id="heroCtaPrimary" class="btn primary" href="./join.html">Join TRY</a>
+            <a id="heroCtaSecondary" class="btn" href="#updates">Read more</a>
           </div>
         </div>
       </section>
 
-      <section class="section reveal" aria-label="Story cards">
+      <section id="updates" class="section reveal" aria-label="Story cards">
         <div class="container">
           <div class="section-title">
-            <h2>TRY, for the community</h2>
-            <p class="muted">
+            <h2 id="updatesTitle">TRY, for the community</h2>
+            <p id="updatesSubtitle" class="muted">
               Latest posts and activities (structured as cards for quick updates).
             </p>
           </div>
 
-          <div id="updates" class="card-grid">
-            <article class="story-card">
-              <div class="story-media" aria-hidden="true"></div>
-              <div class="story-body">
-                <p class="tag">Announcement</p>
-                <h3 class="story-title">KUET Vice-Chancellor greeting</h3>
-                <p class="muted">
-                  Congratulatory message for the newly appointed Vice-Chancellor,
-                  wishing strong leadership and continued progress for KUET.
-                </p>
-                <a class="textlink" href="#contact">View official post →</a>
-              </div>
-            </article>
-
-            <article class="story-card">
-              <div class="story-media" aria-hidden="true"></div>
-              <div class="story-body">
-                <p class="tag">Scholarship</p>
-                <h3 class="story-title">Project: Scholarship support</h3>
-                <p class="muted">
-                  Monthly education support for deserving students through
-                  sponsorship and continued follow-up.
-                </p>
-                <a class="textlink" href="#contact">View official post →</a>
-              </div>
-            </article>
-
-            <article class="story-card">
-              <div class="story-media" aria-hidden="true"></div>
-              <div class="story-body">
-                <p class="tag">Emergency aid</p>
-                <h3 class="story-title">Medical support appeal</h3>
-                <p class="muted">
-                  Emergency fundraising appeal for treatment support. Link only to
-                  verified sources for the latest details.
-                </p>
-                <a class="textlink" href="#contact">View official post →</a>
-              </div>
-            </article>
-
-            <article class="story-card">
-              <div class="story-media" aria-hidden="true"></div>
-              <div class="story-body">
-                <p class="tag">Seasonal support</p>
-                <h3 class="story-title">Eid gift distribution</h3>
-                <p class="muted">
-                  Coordinating volunteers and distributions so families can celebrate
-                  Eid with dignity.
-                </p>
-                <a class="textlink" href="#contact">View official post →</a>
-              </div>
-            </article>
-
-            <article class="story-card">
-              <div class="story-media" aria-hidden="true"></div>
-              <div class="story-body">
-                <p class="tag">Volunteer</p>
-                <h3 class="story-title">Join as a volunteer</h3>
-                <p class="muted">
-                  A simple path for students to contribute time, skills, and energy
-                  to social welfare work.
-                </p>
-                <a class="textlink" href="./join.html">Get involved →</a>
-              </div>
-            </article>
-
-            <article class="story-card">
-              <div class="story-media" aria-hidden="true"></div>
-              <div class="story-body">
-                <p class="tag">Transparency</p>
-                <h3 class="story-title">Updates & reporting</h3>
-                <p class="muted">
-                  Share verified links, photos, and short reporting notes after each
-                  activity for accountability.
-                </p>
-                <a class="textlink" href="#contact">How to report →</a>
-              </div>
-            </article>
-          </div>
+          <div id="postsGrid" class="card-grid" aria-live="polite"></div>
         </div>
       </section>
 
       <section id="work" class="section subtle reveal" aria-label="Organization work">
         <div class="container">
-          <div class="center-block">
-            <h2>TRY’s work</h2>
-            <p class="muted">
-              Education support, emergency aid, and seasonal relief initiatives led
-              by KUET students and volunteers.
+          <div class="section-title">
+            <h2 id="workTitle">What TRY does</h2>
+            <p id="workText" class="muted">
+              KUET students volunteer through TRY to support education, emergency aid,
+              seasonal relief, and on-campus community service — planned, verified, and
+              reported with transparency.
             </p>
-            <a class="btn" href="#contact">Discover more</a>
           </div>
+
+          <div class="work-grid" aria-label="TRY program areas">
+            <article class="work-card">
+              <span class="work-card-icon" aria-hidden="true">📚</span>
+              <h3 class="work-card-title">Scholarship support</h3>
+              <p class="muted">
+                Monthly education help for deserving students, with follow-up and respect
+                for privacy.
+              </p>
+            </article>
+            <article class="work-card">
+              <span class="work-card-icon" aria-hidden="true">🏥</span>
+              <h3 class="work-card-title">Emergency medical aid</h3>
+              <p class="muted">
+                Verified fundraising appeals for urgent treatment, shared only through
+                official TRY posts.
+              </p>
+            </article>
+            <article class="work-card">
+              <span class="work-card-icon" aria-hidden="true">🎁</span>
+              <h3 class="work-card-title">Seasonal relief</h3>
+              <p class="muted">
+                Eid gifts, food support, and targeted help so families can get through
+                hard seasons with dignity.
+              </p>
+            </article>
+            <article class="work-card">
+              <span class="work-card-icon" aria-hidden="true">🤝</span>
+              <h3 class="work-card-title">Field work &amp; drives</h3>
+              <p class="muted">
+                Distributions, blood donation camps, and community outreach coordinated
+                by student volunteers.
+              </p>
+            </article>
+          </div>
+
+          <div class="work-actions">
+            <a id="workCta" class="btn primary" href="#updates">See recent stories</a>
+            <a class="btn" href="./join.html">Volunteer with TRY</a>
+          </div>
+          <p class="work-foot muted">
+            Need help? <a href="./appeal-request.html" class="textlink">Request a donation / appeal →</a>
+          </p>
         </div>
       </section>
 
       <section id="spotlight" class="section reveal" aria-label="Spotlight">
         <div class="container">
           <div class="section-title">
-            <h2>Spotlight</h2>
-            <p class="muted">
+            <h2 id="spotlightTitle">Spotlight</h2>
+            <p id="spotlightSubtitle" class="muted">
               Highlighted stories and impact snapshots (keep short and visual).
             </p>
           </div>
 
-          <div class="spotlight-grid">
-            <article class="mini-card">
-              <div class="mini-media" aria-hidden="true"></div>
-              <h3 class="mini-title">Scholarship impact</h3>
-              <p class="muted">Short beneficiary progress updates with consent.</p>
-            </article>
-            <article class="mini-card">
-              <div class="mini-media" aria-hidden="true"></div>
-              <h3 class="mini-title">Volunteer highlights</h3>
-              <p class="muted">Team work, coordination, and distribution planning.</p>
-            </article>
-            <article class="mini-card">
-              <div class="mini-media" aria-hidden="true"></div>
-              <h3 class="mini-title">Seasonal distributions</h3>
-              <p class="muted">Eid gifts, food support, and targeted community help.</p>
-            </article>
-          </div>
+          <div id="spotlightGrid" class="spotlight-grid" aria-live="polite"></div>
         </div>
       </section>
 
       <section id="inspiration" class="section subtle reveal" aria-label="Inspirational stories">
         <div class="container">
           <div class="section-title">
-            <h2>Inspirational stories</h2>
-            <p class="muted">
+            <h2 id="inspirationTitle">Inspirational stories</h2>
+            <p id="inspirationSubtitle" class="muted">
               Watch stories of service, compassion, and community impact from TRY and related work.
             </p>
           </div>
@@ -230,6 +181,7 @@
             <article class="video-card">
               <div class="video-embed">
                 <iframe
+                  id="youtubePlaylist"
                   src="https://www.youtube.com/embed/videoseries?list=PLMV2DVHuQ9Ii1-yeok6bpsto4gOh3k7c_"
                   title="TRY inspirational stories — YouTube playlist"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -239,8 +191,8 @@
                 ></iframe>
               </div>
               <div class="video-caption">
-                <h3 class="video-title">TRY story playlist</h3>
-                <p class="muted">
+                <h3 id="youtubeTitle" class="video-title">TRY story playlist</h3>
+                <p id="youtubeCaption" class="muted">
                   A curated playlist of inspirational moments and humanitarian work. Use the
                   player controls to browse videos in the series.
                 </p>
@@ -250,19 +202,20 @@
         </div>
       </section>
 
-      <section class="subscribe reveal" aria-label="Subscribe section">
+      <section id="subscribe" class="subscribe reveal" aria-label="Subscribe section">
         <div class="container subscribe-grid">
           <div class="subscribe-media" role="img" aria-label="Large image placeholder"></div>
           <div class="subscribe-panel">
-            <h2>Subscribe to updates</h2>
-            <p class="muted">
-              In the next phase, connect this to a real form (Google Form / email).
+            <h2 id="subscribeTitle">Subscribe to updates</h2>
+            <p id="subscribeText" class="muted">
+              Get notified about TRY activities, volunteer calls, and community updates.
             </p>
-            <form class="subscribe-form" onsubmit="return false;">
+            <form id="subscribeForm" class="subscribe-form">
               <label class="sr-only" for="sub-email">Email</label>
-              <input id="sub-email" type="email" placeholder="Email address" />
+              <input id="sub-email" name="email" type="email" placeholder="Email address" required />
               <button class="btn primary" type="submit">Subscribe</button>
             </form>
+            <p id="subscribeSuccess" class="form-success" hidden role="status"></p>
             <p class="fineprint">
               Note: Donation/payment details should be shared only via verified official posts.
             </p>
@@ -272,8 +225,8 @@
 
       <section class="section subtle reveal" aria-label="Join call to action">
         <div class="container center-block">
-          <h2>Want to volunteer with TRY?</h2>
-          <p class="muted">KUET students can apply through our membership form.</p>
+          <h2 id="joinCtaTitle">Want to volunteer with TRY?</h2>
+          <p id="joinCtaText" class="muted">KUET students can apply through our membership form.</p>
           <a class="btn primary" href="./join.html">Join TRY</a>
         </div>
       </section>
@@ -281,8 +234,8 @@
       <section id="contact" class="section reveal" aria-label="Contact and links">
         <div class="container">
           <div class="section-title">
-            <h2>Contact & official links</h2>
-            <p class="muted">
+            <h2 id="contactTitle">Contact & official links</h2>
+            <p id="contactSubtitle" class="muted">
               Add verified links (Facebook page/group, forms, and official post URLs).
             </p>
           </div>
@@ -290,29 +243,31 @@
           <div class="contact-grid">
             <div class="contact-card">
               <h3>Official links</h3>
-              <ul class="list">
-                <li><a href="#" class="textlink">Facebook page →</a></li>
-                <li><a href="#" class="textlink">Facebook group →</a></li>
-                <li><a href="#" class="textlink">Donation/appeal posts →</a></li>
+              <ul id="contactLinks" class="list">
+                <li><a href="#contact" class="textlink">Facebook page →</a></li>
+                <li><a href="#contact" class="textlink">Facebook group →</a></li>
+                <li><a href="./appeal-request.html" class="textlink">Request donation/appeal →</a></li>
               </ul>
             </div>
 
             <div class="contact-card">
               <h3>Message</h3>
-              <form class="form" onsubmit="return false;">
+              <form id="contactForm" class="form">
                 <div class="field">
                   <label for="name">Name</label>
-                  <input id="name" name="name" type="text" />
+                  <input id="name" name="name" type="text" required />
                 </div>
                 <div class="field">
                   <label for="email">Email</label>
-                  <input id="email" name="email" type="email" />
+                  <input id="email" name="email" type="email" required />
                 </div>
                 <div class="field">
                   <label for="message">Message</label>
-                  <textarea id="message" name="message" rows="4"></textarea>
+                  <textarea id="message" name="message" rows="4" required></textarea>
                 </div>
                 <button class="btn primary" type="submit">Send</button>
+                <p id="contactFormSuccess" class="form-success" hidden role="status"></p>
+                <p id="contactFormError" class="form-error" hidden role="alert"></p>
               </form>
             </div>
           </div>
@@ -343,8 +298,9 @@
           <h3 class="footer-title">Get involved</h3>
           <ul class="list">
             <li><a href="./join.html" class="textlink">Join TRY</a></li>
-            <li><a href="#contact" class="textlink">Volunteer</a></li>
-            <li><a href="#contact" class="textlink">Donate (official links)</a></li>
+            <li><a href="./join.html" class="textlink">Volunteer</a></li>
+            <li><a href="./appeal-request.html" class="textlink">Request appeal</a></li>
+            <li><a href="#contact" class="textlink">Official links</a></li>
             <li><a href="#contact" class="textlink">Contact</a></li>
           </ul>
         </div>
@@ -358,64 +314,7 @@
     <script>
       document.getElementById("year").textContent = String(new Date().getFullYear());
     </script>
-    <script>
-      (function () {
-        const prefersReduced =
-          window.matchMedia &&
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (prefersReduced) return;
-
-        const els = Array.from(document.querySelectorAll(".reveal"));
-        if (els.length === 0) return;
-
-        if (!("IntersectionObserver" in window)) {
-          els.forEach((el) => el.classList.add("is-visible"));
-          return;
-        }
-
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const e of entries) {
-              if (!e.isIntersecting) continue;
-              e.target.classList.add("is-visible");
-              io.unobserve(e.target);
-            }
-          },
-          { threshold: 0.12, rootMargin: "0px 0px -5% 0px" }
-        );
-
-        els.forEach((el) => io.observe(el));
-      })();
-    </script>
-    <script>
-      (function () {
-        const nav = document.getElementById("primaryNav");
-        const btn = document.getElementById("navToggle");
-        const backdrop = document.getElementById("navBackdrop");
-        if (!nav || !btn || !backdrop) return;
-
-        const setOpen = (open) => {
-          nav.classList.toggle("is-open", open);
-          btn.setAttribute("aria-expanded", String(open));
-          backdrop.hidden = !open;
-          document.documentElement.classList.toggle("nav-open", open);
-        };
-
-        btn.addEventListener("click", () => {
-          setOpen(!nav.classList.contains("is-open"));
-        });
-
-        backdrop.addEventListener("click", () => setOpen(false));
-
-        nav.addEventListener("click", (e) => {
-          const target = e.target;
-          if (target && target.tagName === "A") setOpen(false);
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") setOpen(false);
-        });
-      })();
-    </script>
+    <script src="./scripts/site.js" defer></script>
+    <script src="./scripts/content.js" defer></script>
   </body>
 </html>

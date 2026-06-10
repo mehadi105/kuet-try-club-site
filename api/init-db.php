@@ -32,7 +32,8 @@ try {
     require_once __DIR__ . '/database.php';
     getDb();
 
-    echo "Table 'join_applications' is ready.\n";
+    echo "Tables are ready (applications, posts, spotlight, messages, subscribers, settings).\n";
+    echo "Admin panel: http://localhost:8000/admin/login.php\n";
     echo "PostgreSQL setup complete.\n";
 } catch (PDOException $e) {
     fwrite(STDERR, "Setup failed: " . $e->getMessage() . "\n");
