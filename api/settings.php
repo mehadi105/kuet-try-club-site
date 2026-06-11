@@ -34,8 +34,8 @@ function defaultSiteSettings(): array
         'join_cta_text' => 'KUET students can apply through our membership form.',
         'contact_title' => 'Contact & official links',
         'contact_subtitle' => 'Add verified links (Facebook page/group, forms, and official post URLs).',
-        'facebook_page_url' => '#contact',
-        'facebook_group_url' => '#contact',
+        'facebook_page_url' => 'https://www.facebook.com/try.kuet',
+        'facebook_group_url' => 'https://www.facebook.com/groups/try.general',
         'donation_url' => './appeal-request.html',
     ];
 }
@@ -80,9 +80,9 @@ function siteSettingsGroups(): array
         [
             'id' => 'updates',
             'title' => 'News & stories section',
-            'description' => 'Heading text above the post cards on the homepage.',
+            'description' => 'Heading text above the post cards on the homepage. The site shows the latest 6 posts; the “See more” button uses your Facebook page URL from Contact & links.',
             'preview' => '../index.html#updates',
-            'managed_elsewhere' => 'Individual news cards are managed under Admin → Posts.',
+            'managed_elsewhere' => 'Individual news cards are managed under Admin → Posts (only the 6 most recent appear on the homepage).',
             'fields' => [
                 field('updates_title', 'Section title', 'text', 'Heading for the updates / news area.', 'Homepage → #updates title', 'TRY, for the community'),
                 field('updates_subtitle', 'Section subtitle', 'textarea', 'Short line under the updates heading.', 'Homepage → #updates subtitle', ''),
@@ -152,7 +152,7 @@ function siteSettingsGroups(): array
                 field('contact_title', 'Section title', 'text', 'Heading for the contact area.', 'Homepage → #contact title', 'Contact & official links'),
                 field('contact_subtitle', 'Section subtitle', 'textarea', 'Short line under the contact heading.', 'Homepage → #contact subtitle', ''),
                 field('facebook_page_url', 'Facebook page URL', 'url', 'Full link to TRY’s Facebook page. Opens in a new tab when external.', 'Homepage → contact links → Facebook page', 'https://www.facebook.com/try.kuet'),
-                field('facebook_group_url', 'Facebook group URL', 'url', 'Link to TRY’s Facebook group, if you have one.', 'Homepage → contact links → Facebook group', 'https://www.facebook.com/groups/...'),
+                field('facebook_group_url', 'Facebook group URL', 'url', 'Link to TRY’s Facebook group, if you have one.', 'Homepage → contact links → Facebook group', 'https://www.facebook.com/groups/try.general'),
                 field('donation_url', 'Appeal request form URL', 'url', 'Link for “Request donation/appeal” in the contact section.', 'Homepage → contact links → Request donation/appeal', './appeal-request.html'),
             ],
         ],

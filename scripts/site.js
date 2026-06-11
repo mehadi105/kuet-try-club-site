@@ -12,11 +12,15 @@
 
   function getHeaderOffset() {
     const topbar = document.querySelector(".topbar");
-    const nav = document.querySelector(".primary-nav");
     let height = topbar ? topbar.offsetHeight : 58;
 
-    if (nav && window.getComputedStyle(nav).display !== "none") {
-      height += nav.offsetHeight;
+    const nav = document.querySelector(".primary-nav");
+    if (nav) {
+      const style = window.getComputedStyle(nav);
+      const isOverlayNav = style.position === "fixed";
+      if (!isOverlayNav && style.display !== "none") {
+        height += nav.offsetHeight;
+      }
     }
 
     return height + 12;
@@ -60,6 +64,7 @@
 
     nav.classList.toggle("is-open", open);
     btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     backdrop.hidden = !open;
     document.documentElement.classList.toggle("nav-open", open);
     syncScrollOffset();
@@ -76,6 +81,11 @@
     });
 
     backdrop.addEventListener("click", () => setNavOpen(false));
+
+    const closeBtn = nav.querySelector(".mobile-nav-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => setNavOpen(false));
+    }
 
     nav.addEventListener("click", (e) => {
       if (e.target.closest("a")) {

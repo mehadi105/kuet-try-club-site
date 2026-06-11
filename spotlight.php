@@ -43,8 +43,10 @@ $subtitle = (string) $item['summary'];
 $backUrl = './index.html#spotlight';
 $backLabel = '← Back to spotlight';
 $imageUrl = trim((string) ($item['image_url'] ?? ''));
+$displayImages = postDisplayImages($imageUrl, null);
 $externalUrl = trim((string) ($item['link_url'] ?? ''));
 $externalLabel = 'Related link →';
 $publishedDate = formatArticleDate((string) $item['created_at']);
+$imageAlt = articleImageAlt($title, $eyebrow);
 
 require __DIR__ . '/includes/article-detail.php';

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/_init.php';
 require_once __DIR__ . '/../api/appeals.php';
+require_once __DIR__ . '/../api/helpers.php';
 requireAdmin();
 
 $pdo = getDb();
@@ -22,12 +23,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    $galleryJson = encodeGalleryImages(
+        parseGalleryImagesInput((string) ($_POST['gallery_images'] ?? ''))
+    );
+
     $data = [
         ':tag' => trim((string) ($_POST['tag'] ?? '')),
         ':title' => trim((string) ($_POST['title'] ?? '')),
         ':excerpt' => trim((string) ($_POST['excerpt'] ?? '')),
         ':content' => trim((string) ($_POST['content'] ?? '')),
         ':image_url' => trim((string) ($_POST['image_url'] ?? '')),
+        ':gallery_images' => $galleryJson,
         ':link_url' => trim((string) ($_POST['link_url'] ?? '')),
         ':link_label' => trim((string) ($_POST['link_label'] ?? 'Read more →')),
         ':is_published' => !empty($_POST['is_published']),
@@ -45,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare(
             'UPDATE posts SET
                 tag = :tag, title = :title, excerpt = :excerpt, content = :content, image_url = :image_url,
+                gallery_images = :gallery_images::jsonb,
                 link_url = :link_url, link_label = :link_label, is_published = :is_published,
                 sort_order = :sort_order, updated_at = NOW()
              WHERE id = :id'
@@ -53,8 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         flashSet('success', 'Post updated.');
     } else {
         $stmt = $pdo->prepare(
-            'INSERT INTO posts (tag, title, excerpt, content, image_url, link_url, link_label, is_published, sort_order)
-             VALUES (:tag, :title, :excerpt, :content, :image_url, :link_url, :link_label, :is_published, :sort_order)
+            'INSERT INTO posts (tag, title, excerpt, content, image_url, gallery_images, link_url, link_label, is_published, sort_order)
+             VALUES (:tag, :title, :excerpt, :content, :image_url, :gallery_images::jsonb, :link_url, :link_label, :is_published, :sort_order)
              RETURNING id'
         );
         $stmt->execute($data);
@@ -146,7 +153,10 @@ renderAdminHeader('Posts', 'posts.php');
       <label>Title <input type="text" name="title" value="<?= e($editing['title'] ?? '') ?>" required /></label>
       <label>Excerpt (short summary for cards) <textarea name="excerpt" required><?= e($editing['excerpt'] ?? '') ?></textarea></label>
       <label>Full content (shown on detail page — separate paragraphs with a blank line) <textarea name="content" rows="10"><?= e($editing['content'] ?? '') ?></textarea></label>
-      <label>Image URL <input type="text" name="image_url" value="<?= e($editing['image_url'] ?? '') ?>" placeholder="./public/your-image.jpg" /></label>
+      <label>Card image URL <input type="text" name="image_url" value="<?= e($editing['image_url'] ?? '') ?>" placeholder="./public/your-image.jpg" /></label>
+      <label>Detail page images (one per line; optional caption after |)
+        <textarea name="gallery_images" rows="4" placeholder="./public/image-one.png | Caption&#10;./public/image-two.png"><?= e(galleryImagesToInput($editing['gallery_images'] ?? '')) ?></textarea>
+      </label>
       <div class="admin-form-row">
         <label>External link URL (optional) <input type="text" name="link_url" value="<?= e($editing['link_url'] ?? '') ?>" placeholder="https://facebook.com/..." /></label>
         <label>External link label <input type="text" name="link_label" value="<?= e($editing['link_label'] ?? 'Official post →') ?>" /></label>

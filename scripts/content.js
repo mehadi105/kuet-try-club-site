@@ -19,32 +19,53 @@
     return { href: safeUrl, attrs };
   }
 
-  function mediaBlock(imageUrl, className) {
-    if (!imageUrl) {
-      return `<div class="${className}" aria-hidden="true"></div>`;
+  function formatPostDate(iso) {
+    if (!iso) return "";
+    try {
+      return new Date(iso).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    } catch {
+      return "";
     }
-    return `<div class="${className} has-image" aria-hidden="true"><img src="${escapeHtml(imageUrl)}" alt="" loading="lazy" decoding="async" /></div>`;
+  }
+
+  function mediaBlock(imageUrl, className, altText) {
+    if (!imageUrl) {
+      return `<div class="${className} story-media-fallback" aria-hidden="true"><span class="story-media-placeholder">TRY</span></div>`;
+    }
+    const alt = escapeHtml(altText || "Story image");
+    return `<div class="${className} has-image"><img src="${escapeHtml(imageUrl)}" alt="${alt}" loading="lazy" decoding="async" /></div>`;
   }
 
   function renderPosts(posts) {
     const grid = document.getElementById("postsGrid");
     if (!grid || !Array.isArray(posts)) return;
 
-    grid.innerHTML = posts
-      .map(
-        (post) => `
+    grid.innerHTML = posts.slice(0, 6)
+      .map((post) => {
+        const dateLabel = formatPostDate(post.created_at);
+        const meta = dateLabel
+          ? `<p class="story-meta"><time datetime="${escapeHtml(post.created_at || "")}">${escapeHtml(dateLabel)}</time></p>`
+          : "";
+        return `
       <article class="story-card">
         <a class="story-card-hit" href="./post.php?id=${encodeURIComponent(post.id)}">
-          ${mediaBlock(post.image_url, "story-media")}
+          ${mediaBlock(post.image_url, "story-media", post.title)}
           <div class="story-body">
-            <p class="tag">${escapeHtml(post.tag)}</p>
+            <div class="story-body-top">
+              <p class="tag tag-pill">${escapeHtml(post.tag)}</p>
+              ${meta}
+            </div>
             <h3 class="story-title">${escapeHtml(post.title)}</h3>
-            <p class="muted">${escapeHtml(post.excerpt)}</p>
-            <span class="textlink story-read-more">Read full story →</span>
+            <p class="story-excerpt muted">${escapeHtml(post.excerpt)}</p>
+            <span class="story-read-more">Read full story <span aria-hidden="true">→</span></span>
           </div>
         </a>
-      </article>`
-      )
+      </article>`;
+      })
       .join("");
   }
 
@@ -116,6 +137,19 @@
     if (workCta) {
       workCta.textContent = settings.work_cta_label || workCta.textContent;
       workCta.href = settings.work_cta_url || workCta.href;
+    }
+
+    const updatesSeeMore = document.getElementById("updatesSeeMore");
+    if (updatesSeeMore) {
+      const fbUrl = settings.facebook_page_url || "https://www.facebook.com/try.kuet";
+      updatesSeeMore.href = fbUrl;
+      if (/^https?:\/\//i.test(fbUrl)) {
+        updatesSeeMore.target = "_blank";
+        updatesSeeMore.rel = "noopener noreferrer";
+      } else {
+        updatesSeeMore.removeAttribute("target");
+        updatesSeeMore.removeAttribute("rel");
+      }
     }
 
     const iframe = document.getElementById("youtubePlaylist");

@@ -14,7 +14,8 @@ try {
         'SELECT id, tag, title, excerpt, image_url, link_url, link_label, sort_order, created_at
          FROM posts
          WHERE is_published = TRUE
-         ORDER BY sort_order ASC, created_at DESC'
+         ORDER BY created_at DESC, sort_order ASC
+         LIMIT 6'
     )->fetchAll();
 
     $spotlight = $pdo->query(
