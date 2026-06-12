@@ -33,10 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin login — TRY KUET</title>
+    <link rel="icon" href="../public/try-logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../public/try-logo.png" />
     <link rel="stylesheet" href="./admin.css" />
   </head>
   <body class="login-page">
     <div class="login-card">
+      <img class="login-logo" src="../public/try-logo.png" alt="" width="56" height="56" decoding="async" />
       <h1>Admin login</h1>
       <p>Sign in to manage posts, applications, and site content.</p>
       <?php if ($error !== ''): ?>

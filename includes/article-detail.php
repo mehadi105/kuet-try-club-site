@@ -46,6 +46,8 @@ $hasMedia = $displayImages !== [];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?= e($pageTitle) ?> — TRY KUET</title>
+    <link rel="icon" href="./public/try-logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./public/try-logo.png" />
     <meta name="description" content="<?= e($metaDescription) ?>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,7 +63,7 @@ $hasMedia = $displayImages !== [];
     <header class="topbar" aria-label="Site header">
       <div class="container topbar-inner">
         <a class="logo" href="./index.html" aria-label="TRY KUET home">
-          <span class="logo-mark" aria-hidden="true">TRY</span>
+          <img class="logo-image" src="./public/try-logo.png" alt="" width="42" height="42" decoding="async" />
           <span class="logo-text">Social Service Club</span>
         </a>
 

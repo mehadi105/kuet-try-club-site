@@ -333,6 +333,12 @@ function migrateSchema(PDO $pdo): void
     migrateSpotlightEventGalleries($pdo);
 
     $pdo->exec(
+        "INSERT INTO site_settings (key, value)
+         SELECT 'subscribe_image', './public/subscribe-community.png'
+         WHERE NOT EXISTS (SELECT 1 FROM site_settings WHERE key = 'subscribe_image')"
+    );
+
+    $pdo->exec(
         'CREATE TABLE IF NOT EXISTS appeal_requests (
             id SERIAL PRIMARY KEY,
             requester_name VARCHAR(120) NOT NULL,

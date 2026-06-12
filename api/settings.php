@@ -30,6 +30,7 @@ function defaultSiteSettings(): array
         'youtube_caption' => 'A curated playlist of inspirational moments and humanitarian work. Use the player controls to browse videos in the series.',
         'subscribe_title' => 'Subscribe to updates',
         'subscribe_text' => 'Get notified about TRY activities, volunteer calls, and community updates.',
+        'subscribe_image' => './public/subscribe-community.png',
         'join_cta_title' => 'Want to volunteer with TRY?',
         'join_cta_text' => 'KUET students can apply through our membership form.',
         'contact_title' => 'Contact & official links',
@@ -138,6 +139,7 @@ function siteSettingsGroups(): array
             'fields' => [
                 field('subscribe_title', 'Subscribe heading', 'text', 'Title for the email signup area.', 'Homepage → #subscribe title', 'Subscribe to updates'),
                 field('subscribe_text', 'Subscribe description', 'textarea', 'Text above the email input.', 'Homepage → #subscribe text', ''),
+                field('subscribe_image', 'Subscribe section image', 'url', 'Wide photo beside the email signup panel. Use ./public/your-file.png for files in public/.', 'Homepage → #subscribe image', './public/subscribe-community.png'),
                 field('join_cta_title', 'Volunteer CTA heading', 'text', 'Title in the join call-to-action band.', 'Homepage → volunteer CTA title', 'Want to volunteer with TRY?'),
                 field('join_cta_text', 'Volunteer CTA text', 'textarea', 'Supporting text above the Join TRY button (button link is fixed to join.html).', 'Homepage → volunteer CTA text', ''),
             ],

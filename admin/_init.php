@@ -5,11 +5,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/../api/database.php';
 require_once __DIR__ . '/../api/auth.php';
 
-function e(string $value): string
-{
-    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
-
 function csrfToken(): string
 {
     if (empty($_SESSION['csrf_token'])) {
@@ -66,13 +61,15 @@ function renderAdminHeader(string $title, string $active = ''): void
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?= e($title) ?> — TRY KUET Admin</title>
+    <link rel="icon" href="../public/try-logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="../public/try-logo.png" />
     <link rel="stylesheet" href="./admin.css" />
   </head>
   <body>
     <div class="admin-shell">
       <aside class="admin-sidebar">
         <a class="admin-brand" href="./index.php">
-          <span class="admin-brand-mark">TRY</span>
+          <img class="admin-brand-logo" src="../public/try-logo.png" alt="" width="36" height="36" decoding="async" />
           <span>Admin panel</span>
         </a>
         <nav class="admin-nav" aria-label="Admin navigation">

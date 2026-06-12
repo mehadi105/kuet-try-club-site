@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TRY KUET — Social Service Club</title>
+    <link rel="icon" href="./public/try-logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./public/try-logo.png" />
     <meta
       name="description"
       content="TRY (KUET Social Service Club) — a voluntary, charitable organization working for social welfare."
@@ -22,7 +24,7 @@
     <header class="topbar" aria-label="Site header">
       <div class="container topbar-inner">
         <a class="logo" href="./index.html" aria-label="TRY KUET home">
-          <span class="logo-mark" aria-hidden="true">TRY</span>
+          <img class="logo-image" src="./public/try-logo.png" alt="" width="42" height="42" decoding="async" />
           <span class="logo-text">Social Service Club</span>
         </a>
 
@@ -220,7 +222,15 @@
 
       <section id="subscribe" class="subscribe reveal" aria-label="Subscribe section">
         <div class="container subscribe-grid">
-          <div class="subscribe-media" role="img" aria-label="Large image placeholder"></div>
+          <div class="subscribe-media">
+            <img
+              id="subscribeImage"
+              src="./public/subscribe-community.png"
+              alt="TRY volunteers working together for community service"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           <div class="subscribe-panel">
             <h2 id="subscribeTitle">Subscribe to updates</h2>
             <p id="subscribeText" class="muted">
@@ -298,7 +308,10 @@
     <footer class="footer" aria-label="Footer">
       <div class="container footer-grid">
         <div class="footer-brand">
-          <div class="footer-logo">TRY KUET</div>
+          <div class="footer-logo">
+            <img class="footer-logo-image" src="./public/try-logo.png" alt="" width="36" height="36" loading="lazy" decoding="async" />
+            <span>TRY KUET</span>
+          </div>
           <p class="muted">
             Web Programming Lab project prototype — structure-first build.
           </p>

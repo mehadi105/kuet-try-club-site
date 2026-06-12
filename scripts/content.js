@@ -117,6 +117,11 @@
     setText("inspirationSubtitle", settings.inspiration_subtitle);
     setText("youtubeTitle", settings.youtube_title);
     setText("youtubeCaption", settings.youtube_caption);
+    const subscribeImage = document.getElementById("subscribeImage");
+    if (subscribeImage && settings.subscribe_image) {
+      subscribeImage.src = settings.subscribe_image;
+    }
+
     setText("subscribeTitle", settings.subscribe_title);
     setText("subscribeText", settings.subscribe_text);
     setText("joinCtaTitle", settings.join_cta_title);
