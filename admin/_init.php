@@ -47,7 +47,7 @@ function adminNavItems(): array
     return [
         'index.php' => 'Dashboard',
         'posts.php' => 'Posts',
-        'spotlight.php' => 'Spotlight',
+        'spotlight.php' => 'Recent events',
         'applications.php' => 'Applications',
         'messages.php' => 'Messages',
         'appeals.php' => 'Appeal requests',

@@ -17,7 +17,19 @@ declare(strict_types=1);
 /** @var string $imageAlt */
 /** @var list<array{url: string, caption: string}> $displayImages */
 /** @var list<array<string, mixed>> $relatedPosts */
+/** @var string $articleLayout */
+/** @var string $breadcrumbSection */
+/** @var string $breadcrumbSectionUrl */
+/** @var string $featuredImageUrl */
+/** @var list<array{url: string, caption: string}> $gridImages */
+/** @var list<array<string, mixed>> $relatedEvents */
 
+$articleLayout = $articleLayout ?? 'split';
+$featuredImageUrl = $featuredImageUrl ?? '';
+$gridImages = $gridImages ?? [];
+$relatedEvents = $relatedEvents ?? [];
+$breadcrumbSection = $breadcrumbSection ?? 'Recent events';
+$breadcrumbSectionUrl = $breadcrumbSectionUrl ?? './index.html#recent-events';
 $externalUrl = $externalUrl ?? '';
 $externalLabel = $externalLabel ?? 'Related link →';
 $imageUrl = $imageUrl ?? '';
@@ -83,10 +95,9 @@ $hasMedia = $displayImages !== [];
           <a href="./index.html">Home</a>
           <a href="./index.html#updates">News &amp; stories</a>
           <a href="./index.html#work">What we do</a>
-          <a href="./index.html#spotlight">Spotlight</a>
+          <a href="./index.html#recent-events">Recent events</a>
           <a href="./index.html#inspiration">Inspirational stories</a>
           <a href="./appeal-request.html">Request appeal</a>
-          <a href="./application-status.html">Check application status</a>
           <a href="./index.html#contact">Contact</a>
         </div>
       </div>
@@ -96,6 +107,116 @@ $hasMedia = $displayImages !== [];
       <div class="container article-page">
         <a class="textlink article-back" href="<?= e($backUrl) ?>"><?= e($backLabel) ?></a>
 
+        <?php if ($articleLayout === 'event'): ?>
+        <?php $hasFeaturedImage = $featuredImageUrl !== ''; ?>
+        <div class="event-article-wrap">
+          <article class="article-shell article-shell--event" aria-label="Event content">
+            <nav class="event-breadcrumbs" aria-label="Breadcrumb">
+              <a href="./index.html">Home</a>
+              <span class="event-breadcrumbs-sep" aria-hidden="true">/</span>
+              <a href="<?= e($breadcrumbSectionUrl) ?>"><?= e($breadcrumbSection) ?></a>
+              <span class="event-breadcrumbs-sep" aria-hidden="true">/</span>
+              <span class="event-breadcrumbs-current"><?= e($title) ?></span>
+            </nav>
+
+            <header class="event-article-header">
+              <p class="event-article-eyebrow"><?= e($eyebrow) ?></p>
+              <h1 class="event-article-title"><?= e($title) ?></h1>
+              <?php if ($publishedDate !== ''): ?>
+                <p class="event-article-date">Published on <?= e($publishedDate) ?></p>
+              <?php endif; ?>
+            </header>
+
+            <?php if ($hasFeaturedImage): ?>
+              <figure class="event-article-feature">
+                <img
+                  src="<?= e($featuredImageUrl) ?>"
+                  alt="<?= e($imageAlt) ?>"
+                  loading="eager"
+                  decoding="async"
+                />
+              </figure>
+            <?php endif; ?>
+
+            <?php if ($gridImages !== []): ?>
+              <section class="event-gallery-section" aria-label="Event photo highlights">
+                <h2 class="event-gallery-heading">Event highlights</h2>
+                <div class="event-gallery-grid">
+                  <?php foreach ($gridImages as $index => $tile): ?>
+                    <figure class="event-gallery-tile">
+                      <img
+                        src="<?= e($tile['url']) ?>"
+                        alt="<?= e($tile['caption'] !== '' ? $tile['caption'] : $imageAlt) ?>"
+                        loading="<?= $index < 3 ? 'eager' : 'lazy' ?>"
+                        decoding="async"
+                      />
+                      <?php if ($tile['caption'] !== ''): ?>
+                        <figcaption class="event-gallery-tile-label"><?= e($tile['caption']) ?></figcaption>
+                      <?php endif; ?>
+                    </figure>
+                  <?php endforeach; ?>
+                </div>
+              </section>
+            <?php endif; ?>
+
+            <div class="event-article-body">
+              <?php if ($subtitle !== ''): ?>
+                <p class="event-article-lede"><?= e($subtitle) ?></p>
+              <?php endif; ?>
+
+              <div class="article-content prose event-article-content">
+                <?= $bodyHtml ?>
+              </div>
+
+              <?php if ($externalUrl !== ''): ?>
+                <footer class="event-article-actions">
+                  <a
+                    class="btn primary"
+                    href="<?= e($externalUrl) ?>"
+                    <?= $isExternalLink ? 'target="_blank" rel="noopener noreferrer"' : '' ?>
+                  >
+                    <?= e($externalLabel) ?>
+                  </a>
+                </footer>
+              <?php endif; ?>
+            </div>
+          </article>
+
+          <?php if ($relatedEvents !== []): ?>
+            <aside class="event-sidebar" aria-label="More recent events">
+              <div class="event-sidebar-panel">
+                <h2 class="event-sidebar-title">Recent events</h2>
+                <ul class="event-sidebar-list">
+                  <?php foreach ($relatedEvents as $related): ?>
+                    <?php $relatedDate = formatArticleDate((string) ($related['created_at'] ?? '')); ?>
+                    <li class="event-sidebar-item">
+                      <a class="event-sidebar-hit" href="./spotlight.php?id=<?= (int) $related['id'] ?>">
+                        <?php if (trim((string) ($related['image_url'] ?? '')) !== ''): ?>
+                          <img
+                            class="event-sidebar-thumb"
+                            src="<?= e((string) $related['image_url']) ?>"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        <?php else: ?>
+                          <span class="event-sidebar-thumb event-sidebar-thumb-fallback" aria-hidden="true">TRY</span>
+                        <?php endif; ?>
+                        <span class="event-sidebar-copy">
+                          <span class="event-sidebar-item-title"><?= e((string) ($related['title'] ?? '')) ?></span>
+                          <?php if ($relatedDate !== ''): ?>
+                            <span class="event-sidebar-item-date"><?= e($relatedDate) ?></span>
+                          <?php endif; ?>
+                        </span>
+                      </a>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+            </aside>
+          <?php endif; ?>
+        </div>
+        <?php else: ?>
         <article class="article-shell" aria-label="Story content">
           <div class="article-hero<?= $hasMedia ? '' : ' article-hero--content-only' ?>">
             <div class="article-hero-content">
@@ -151,6 +272,7 @@ $hasMedia = $displayImages !== [];
             <?php endif; ?>
           </div>
         </article>
+        <?php endif; ?>
 
         <?php if ($relatedPosts !== []): ?>
           <section class="article-related" aria-labelledby="related-posts-heading">

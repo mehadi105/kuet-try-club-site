@@ -34,7 +34,7 @@
 
   function mediaBlock(imageUrl, className, altText) {
     if (!imageUrl) {
-      return `<div class="${className} story-media-fallback" aria-hidden="true"><span class="story-media-placeholder">TRY</span></div>`;
+      return `<div class="${className} story-media-fallback event-card-media-fallback" aria-hidden="true"><span class="story-media-placeholder">TRY</span></div>`;
     }
     const alt = escapeHtml(altText || "Story image");
     return `<div class="${className} has-image"><img src="${escapeHtml(imageUrl)}" alt="${alt}" loading="lazy" decoding="async" /></div>`;
@@ -74,17 +74,20 @@
     if (!grid || !Array.isArray(items)) return;
 
     grid.innerHTML = items
-      .map(
-        (item) => `
-      <article class="mini-card">
-        <a class="mini-card-hit" href="./spotlight.php?id=${encodeURIComponent(item.id)}">
-          ${mediaBlock(item.image_url, "mini-media")}
-          <h3 class="mini-title">${escapeHtml(item.title)}</h3>
-          <p class="muted">${escapeHtml(item.summary)}</p>
-          <span class="textlink story-read-more">Read more →</span>
+      .map((item) => {
+        const dateLabel = formatPostDate(item.created_at);
+        const dateHtml = dateLabel
+          ? `<p class="event-card-date">Published on ${escapeHtml(dateLabel)}</p>`
+          : "";
+        return `
+      <article class="event-card">
+        <a class="event-card-hit" href="./spotlight.php?id=${encodeURIComponent(item.id)}">
+          ${mediaBlock(item.image_url, "event-card-media", item.title)}
+          <h3 class="event-card-title">${escapeHtml(item.title)}</h3>
+          ${dateHtml}
         </a>
-      </article>`
-      )
+      </article>`;
+      })
       .join("");
   }
 

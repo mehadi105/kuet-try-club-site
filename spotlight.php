@@ -13,7 +13,7 @@ if ($id <= 0) {
 
 $pdo = getDb();
 $stmt = $pdo->prepare(
-    'SELECT id, title, summary, content, image_url, link_url, created_at
+    'SELECT id, title, summary, content, image_url, gallery_images, link_url, created_at
      FROM spotlight_items
      WHERE id = :id AND is_published = TRUE'
 );
@@ -37,16 +37,30 @@ if ($bodyHtml === '') {
 
 $pageTitle = (string) $item['title'];
 $metaDescription = (string) $item['summary'];
-$eyebrow = 'Spotlight';
+$eyebrow = 'Recent Events';
 $title = (string) $item['title'];
 $subtitle = (string) $item['summary'];
-$backUrl = './index.html#spotlight';
-$backLabel = '← Back to spotlight';
+$backUrl = './index.html#recent-events';
+$backLabel = '← Back to recent events';
+$articleLayout = 'event';
+$breadcrumbSection = 'Recent events';
+$breadcrumbSectionUrl = './index.html#recent-events';
 $imageUrl = trim((string) ($item['image_url'] ?? ''));
-$displayImages = postDisplayImages($imageUrl, null);
+$gridImages = eventGalleryTiles($item['gallery_images'] ?? null);
+$featuredImageUrl = $imageUrl !== '' ? $imageUrl : ($gridImages[0]['url'] ?? '');
 $externalUrl = trim((string) ($item['link_url'] ?? ''));
-$externalLabel = 'Related link →';
+$externalLabel = 'View on Facebook →';
 $publishedDate = formatArticleDate((string) $item['created_at']);
 $imageAlt = articleImageAlt($title, $eyebrow);
+
+$relatedEventsStmt = $pdo->prepare(
+    'SELECT id, title, image_url, created_at
+     FROM spotlight_items
+     WHERE is_published = TRUE AND id != :id
+     ORDER BY created_at DESC, sort_order ASC
+     LIMIT 5'
+);
+$relatedEventsStmt->execute([':id' => $id]);
+$relatedEvents = $relatedEventsStmt->fetchAll() ?: [];
 
 require __DIR__ . '/includes/article-detail.php';

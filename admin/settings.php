@@ -94,7 +94,7 @@ renderAdminHeader('Site settings', 'settings.php');
     <p><strong>Not controlled here</strong> — use the other admin pages for dynamic content:</p>
     <ul class="admin-settings-notice-list">
       <li><a href="./posts.php">Posts</a> — news &amp; story cards (#updates)</li>
-      <li><a href="./spotlight.php">Spotlight</a> — spotlight mini-cards</li>
+      <li><a href="./spotlight.php">Recent events</a> — homepage cards, hero image, and highlights gallery</li>
       <li><a href="./appeals.php">Appeal requests</a> — donation/appeal form submissions</li>
       <li><a href="./messages.php">Messages</a> — contact form inbox</li>
       <li><a href="./subscribers.php">Subscribers</a> — email list</li>
@@ -158,7 +158,7 @@ renderAdminHeader('Site settings', 'settings.php');
 
 <section class="admin-panel admin-settings-danger-zone">
   <h2>Restore defaults</h2>
-  <p class="admin-meta">Reset stored values to the project defaults. This does not delete posts, spotlight items, or messages.</p>
+  <p class="admin-meta">Reset stored values to the project defaults. This does not delete posts, recent events, or messages.</p>
   <div class="admin-settings-reset-grid">
     <?php foreach ($groups as $group): ?>
       <form method="post" onsubmit="return confirm('Reset “<?= e((string) $group['title']) ?>” to defaults?');">

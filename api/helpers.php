@@ -175,6 +175,11 @@ function articleImageAlt(string $title, string $tag): string
 /**
  * @return list<array{url: string, caption: string}>
  */
+function eventGalleryTiles(mixed $galleryRaw): array
+{
+    return postDisplayImages('', $galleryRaw);
+}
+
 function postDisplayImages(string $imageUrl, mixed $galleryRaw): array
 {
     $images = [];

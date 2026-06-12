@@ -224,28 +224,66 @@ function defaultSeedPosts(): array
     return array_merge(newTryPosts2026(), latestTryPosts());
 }
 
-function defaultSeedSpotlight(): array
+function demoRecentEvents(): array
 {
     return [
         [
-            'title' => 'Scholarship impact',
-            'summary' => 'Short beneficiary progress updates with consent.',
-            'content' => "TRY shares periodic scholarship impact updates when beneficiaries and families consent to publication.\n\nThese snapshots highlight attendance, exam progress, and personal milestones — always shared with care and respect.\n\nThe spotlight reminds donors that small monthly support can create long-term change.",
+            'title' => 'Eid gift distribution drive',
+            'summary' => 'TRY volunteers packed and delivered Eid gifts to families around Khulna ahead of the holiday.',
+            'content' => "Ahead of Eid, TRY volunteers collected donations, sorted packages, and coordinated delivery routes across Khulna.\n\nEach gift box included essentials chosen with care so families could celebrate with dignity.\n\nThe drive was planned in teams — fundraising, packing, transport, and on-ground distribution — with volunteers checking in families beforehand and reporting back after delivery.\n\nThank you to everyone who contributed time, funds, and logistics support.",
+            'image_url' => './public/event-eid-gift-drive.png',
+            'gallery_images' => [
+                ['url' => './public/event-eid-gift-drive.png', 'caption' => 'Volunteers pack Eid gift boxes'],
+                ['url' => './public/post-eid-ul-adha.png', 'caption' => 'Donation collections continue'],
+                ['url' => './public/639984083_1360235046146231_4377309201098488597_n.jpg', 'caption' => 'Morning briefing before routes'],
+                ['url' => './public/event-scholarship-drive.png', 'caption' => 'Supplies sorted by team'],
+                ['url' => './public/event-health-camp.png', 'caption' => 'Families register for delivery'],
+                ['url' => './public/post-pohela-boishakh-1433.png', 'caption' => 'Handover at the doorstep'],
+            ],
+            'link_url' => 'https://www.facebook.com/try.kuet',
             'sort_order' => 1,
+            'created_at' => '2025-06-12 11:00:00+06',
         ],
         [
-            'title' => 'Volunteer highlights',
-            'summary' => 'Team work, coordination, and distribution planning.',
-            'content' => "Behind every distribution is a team: planners, fundraisers, packers, drivers, and on-ground volunteers.\n\nSpotlight stories recognize the coordination required to turn an idea into organized action.\n\nTRY celebrates students who show up consistently and support each other during demanding field work.",
+            'title' => 'Scholarship enrollment day',
+            'summary' => 'Students received school supplies and monthly scholarship guidance at a TRY campus enrollment session.',
+            'content' => "TRY held a scholarship enrollment session for supported students, distributing notebooks, bags, and study materials for the new term.\n\nVolunteers recorded attendance, confirmed contact details, and shared study plans with guardians where needed.\n\nThe session also gave beneficiaries a chance to meet their coordinators and ask questions about upcoming exams and support schedules.\n\nConsistent follow-up keeps the scholarship program accountable and transparent.",
+            'image_url' => './public/event-scholarship-drive.png',
+            'gallery_images' => [
+                ['url' => './public/event-scholarship-drive.png', 'caption' => 'Enrollment desk opens'],
+                ['url' => './public/event-eid-gift-drive.png', 'caption' => 'School kits prepared'],
+                ['url' => './public/post-appeal-ismat-iti.png', 'caption' => 'Notebook distribution'],
+                ['url' => './public/639984083_1360235046146231_4377309201098488597_n.jpg', 'caption' => 'Students check in'],
+                ['url' => './public/event-health-camp.png', 'caption' => 'Attendance recorded'],
+                ['url' => './public/post-advisor-kaniz-fatema.png', 'caption' => 'Coordinators with guardians'],
+            ],
+            'link_url' => 'https://www.facebook.com/try.kuet',
             'sort_order' => 2,
+            'created_at' => '2025-03-20 09:30:00+06',
         ],
         [
-            'title' => 'Seasonal distributions',
-            'summary' => 'Eid gifts, food support, and targeted community help.',
-            'content' => "Seasonal drives focus on Eid gifts, food support, and targeted help for families facing sudden hardship.\n\nVolunteers map needs, prepare packages, and deliver with empathy.\n\nThese stories capture the human side of TRY's work beyond numbers and lists.",
+            'title' => 'Community health checkup camp',
+            'summary' => 'A one-day health camp offered basic screenings and awareness for nearby residents with TRY volunteers on site.',
+            'content' => "TRY organized a community health checkup camp with volunteer support for registration, queue management, and basic screening stations.\n\nResidents received blood pressure checks and general health guidance, with volunteers helping elderly participants move through the line comfortably.\n\nMedical partners and senior volunteers briefed the team on privacy, respect, and clear communication throughout the day.\n\nEvents like this extend TRY's service beyond campus and build trust with the communities we serve.",
+            'image_url' => './public/event-health-camp.png',
+            'gallery_images' => [
+                ['url' => './public/event-health-camp.png', 'caption' => 'Registration volunteers on site'],
+                ['url' => './public/event-eid-gift-drive.png', 'caption' => 'Screening area setup'],
+                ['url' => './public/event-scholarship-drive.png', 'caption' => 'Blood pressure checks'],
+                ['url' => './public/post-appeal-riyan-shihron.png', 'caption' => 'Queue management'],
+                ['url' => './public/post-appeal-ismat-iti.png', 'caption' => 'Awareness desk'],
+                ['url' => './public/post-eid-ul-adha.png', 'caption' => 'Closing team debrief'],
+            ],
+            'link_url' => 'https://www.facebook.com/try.kuet',
             'sort_order' => 3,
+            'created_at' => '2025-01-18 10:00:00+06',
         ],
     ];
+}
+
+function defaultSeedSpotlight(): array
+{
+    return demoRecentEvents();
 }
 
 function migrateSchema(PDO $pdo): void
@@ -290,6 +328,9 @@ function migrateSchema(PDO $pdo): void
     migratePostGalleries($pdo);
     migrateTryPosts2026($pdo);
     migrateRemoveVolunteerPost($pdo);
+    migrateRecentEventsSettings($pdo);
+    migrateDemoRecentEvents($pdo);
+    migrateSpotlightEventGalleries($pdo);
 
     $pdo->exec(
         'CREATE TABLE IF NOT EXISTS appeal_requests (
@@ -422,6 +463,110 @@ function migrateLatestPosts(PDO $pdo): void
     setSetting($pdo, 'posts_seed_version', '2025-try-latest');
 }
 
+function insertSpotlightItem(PDO $pdo, array $item): void
+{
+    $gallery = '[]';
+    if (!empty($item['gallery_images'])) {
+        $gallery = encodeGalleryImages($item['gallery_images']);
+    }
+
+    $columns = 'title, summary, content, image_url, gallery_images, link_url, sort_order';
+    $values = ':title, :summary, :content, :image_url, :gallery_images::jsonb, :link_url, :sort_order';
+    $params = [
+        ':title' => $item['title'],
+        ':summary' => $item['summary'],
+        ':content' => $item['content'],
+        ':image_url' => $item['image_url'] ?? '',
+        ':gallery_images' => $gallery,
+        ':link_url' => $item['link_url'] ?? '',
+        ':sort_order' => $item['sort_order'],
+    ];
+
+    if (!empty($item['created_at'])) {
+        $columns .= ', created_at';
+        $values .= ', :created_at';
+        $params[':created_at'] = $item['created_at'];
+    }
+
+    $stmt = $pdo->prepare(
+        "INSERT INTO spotlight_items ({$columns}) VALUES ({$values})"
+    );
+    $stmt->execute($params);
+}
+
+function migrateSpotlightEventGalleries(PDO $pdo): void
+{
+    $pdo->exec('ALTER TABLE spotlight_items ADD COLUMN IF NOT EXISTS gallery_images JSONB');
+
+    if (getSetting($pdo, 'spotlight_gallery_version') === '1') {
+        return;
+    }
+
+    $stmt = $pdo->prepare(
+        'UPDATE spotlight_items
+         SET gallery_images = :gallery_images::jsonb,
+             image_url = COALESCE(NULLIF(image_url, \'\'), :image_url)
+         WHERE title = :title'
+    );
+
+    foreach (demoRecentEvents() as $item) {
+        if (empty($item['gallery_images'])) {
+            continue;
+        }
+        $stmt->execute([
+            ':gallery_images' => encodeGalleryImages($item['gallery_images']),
+            ':image_url' => $item['image_url'] ?? '',
+            ':title' => $item['title'],
+        ]);
+    }
+
+    setSetting($pdo, 'spotlight_gallery_version', '1');
+}
+
+function migrateDemoRecentEvents(PDO $pdo): void
+{
+    if (getSetting($pdo, 'spotlight_demo_version') === '1') {
+        return;
+    }
+
+    $legacyTitles = [
+        'Scholarship impact',
+        'Volunteer highlights',
+        'Seasonal distributions',
+    ];
+
+    $delete = $pdo->prepare('DELETE FROM spotlight_items WHERE title = :title');
+    foreach ($legacyTitles as $title) {
+        $delete->execute([':title' => $title]);
+    }
+
+    foreach (demoRecentEvents() as $item) {
+        $delete->execute([':title' => $item['title']]);
+        insertSpotlightItem($pdo, $item);
+    }
+
+    setSetting($pdo, 'spotlight_demo_version', '1');
+}
+
+function migrateRecentEventsSettings(PDO $pdo): void
+{
+    if (getSetting($pdo, 'spotlight_events_rebrand') === '1') {
+        return;
+    }
+
+    $pdo->exec(
+        "UPDATE site_settings SET value = 'Recent events'
+         WHERE key = 'spotlight_title' AND value = 'Spotlight'"
+    );
+
+    $pdo->exec(
+        "UPDATE site_settings SET value = 'TRY activities, distributions, and campus events — photo highlights and short reports.'
+         WHERE key = 'spotlight_subtitle' AND value = 'Highlighted stories and impact snapshots (keep short and visual).'"
+    );
+
+    setSetting($pdo, 'spotlight_events_rebrand', '1');
+}
+
 function migrateRemoveVolunteerPost(PDO $pdo): void
 {
     if (getSetting($pdo, 'posts_remove_volunteer') === '1') {
@@ -446,20 +591,8 @@ function seedDefaultContent(PDO $pdo): void
 
     $spotlightCount = (int) $pdo->query('SELECT COUNT(*) FROM spotlight_items')->fetchColumn();
     if ($spotlightCount === 0) {
-        $items = defaultSeedSpotlight();
-
-        $stmt = $pdo->prepare(
-            'INSERT INTO spotlight_items (title, summary, content, sort_order)
-             VALUES (:title, :summary, :content, :sort_order)'
-        );
-
-        foreach ($items as $item) {
-            $stmt->execute([
-                ':title' => $item['title'],
-                ':summary' => $item['summary'],
-                ':content' => $item['content'],
-                ':sort_order' => $item['sort_order'],
-            ]);
+        foreach (defaultSeedSpotlight() as $item) {
+            insertSpotlightItem($pdo, $item);
         }
     }
 

@@ -41,6 +41,11 @@ renderAdminHeader('Dashboard', 'index.php');
     <a class="admin-btn" href="./posts.php">Manage posts</a>
   </article>
   <article class="admin-card">
+    <h2>Recent events</h2>
+    <p class="admin-stat"><?= $stats['spotlight'] ?></p>
+    <a class="admin-btn" href="./spotlight.php">Manage events</a>
+  </article>
+  <article class="admin-card">
     <h2>Pending applications</h2>
     <p class="admin-stat"><?= $stats['pending_applications'] ?></p>
     <p class="admin-meta"><?= $stats['applications'] ?> total</p>
